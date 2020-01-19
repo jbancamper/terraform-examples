@@ -26,6 +26,14 @@ variable "access_control_max_age" {
 
 variable "log_prefix" {}
 
+variable "access_control_group" {
+  default = "allUsers"
+}
+
+variable "access_control_group_role" {
+  default = "READER"
+}
+
 resource "google_storage_bucket" "website_storage_bucket" {
   name          = var.site_name
   location      = var.bucket_location
@@ -46,4 +54,10 @@ resource "google_storage_bucket" "website_storage_bucket" {
     log_bucket        = "${var.log_prefix}-access-logs"
     log_object_prefix = var.log_prefix
   }
+}
+
+resource "google_storage_bucket_access_control" "public_rule" {
+  bucket = google_storage_bucket.website_storage_bucket.name
+  role   = var.access_control_group_role
+  entity = var.access_control_group
 }
