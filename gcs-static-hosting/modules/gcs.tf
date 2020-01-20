@@ -61,3 +61,9 @@ resource "google_storage_bucket_access_control" "public_rule" {
   role   = var.access_control_group_role
   entity = var.access_control_group
 }
+
+resource "google_storage_default_object_access_control" "object_public_rule" {
+  bucket = google_storage_bucket.website_storage_bucket.name
+  role   = var.access_control_group_role
+  entity = var.access_control_group
+}
