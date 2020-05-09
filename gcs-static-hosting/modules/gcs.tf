@@ -24,8 +24,6 @@ variable "access_control_max_age" {
   default = "0"
 }
 
-variable "log_prefix" {}
-
 variable "access_control_group" {
   default = "allUsers"
 }
@@ -35,7 +33,7 @@ variable "access_control_group_role" {
 }
 
 resource "google_storage_bucket" "website_storage_bucket" {
-  name          = var.site_name
+  name          = "test-bucket-bancamper"
   location      = var.bucket_location
   storage_class = var.bucket_storage_class
 
@@ -50,10 +48,6 @@ resource "google_storage_bucket" "website_storage_bucket" {
     max_age_seconds = var.access_control_max_age
   }
 
-  logging {
-    log_bucket        = "${var.log_prefix}-access-logs"
-    log_object_prefix = var.log_prefix
-  }
 }
 
 resource "google_storage_bucket_access_control" "public_rule" {
